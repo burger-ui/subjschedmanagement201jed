@@ -1,14 +1,9 @@
-﻿namespace subjschedmanagement
+﻿using System;
+namespace subjschedmanagement
 {
     public class Program
     {
-        static string[] subjects = new string[5];
-        static string[] schedules = new string[5];
-        static int index = 0;
-
-        static void subchoice()
-        {
-
+        public static void Main(string[] args) {
             bool running = true;
 
             while (running)
@@ -36,11 +31,14 @@
                 }
             }
         }
+        static string[] subjects = new string[5];
+        static string[] schedules = new string[5];
+        static int index = 0;
 
         static void Menu()
         {
 
-            Console.WriteLine("\n 1. Add Subjects");
+            Console.WriteLine("\n1. Add Subjects");
             Console.WriteLine("2. View Subjects");
             Console.WriteLine("3. Exit ");
             Console.Write("choose ");
@@ -48,21 +46,32 @@
 
         static void Add()
         {
+            int index = 0;
 
-            if (index >= 5)
-            {
-                Console.WriteLine("List is Full ");
+            for (int i = 1; i < subjects.Length; i++) {
+
+                if (subjects[i] == null) { 
+                    index = i; break;
+                }
+            }
+
+            if (index == 0){
+
+                Console.WriteLine("Subject List is Full");
                 return;
             }
 
-            Console.WriteLine("Subject");
+            Console.WriteLine("Enter Subject Name: ");
             subjects[index] = Console.ReadLine();
 
-            Console.WriteLine("Schedule");
+            Console.WriteLine("Enter Schedule: ");
             schedules[index] = Console.ReadLine();
 
-            index++;
-            Console.WriteLine("the schedule you set is saved");
+            int count = 0;
+            count++;
+            Console.WriteLine("Subject added Successfully.");
+
+           
         }
 
         static void Show()
@@ -75,7 +84,7 @@
             }
             for (int i = 0; i < index; i++)
             {
-                Console.WriteLine((i + 1) + " " + subjects[i] + " - " + schedules[i]);
+                Console.WriteLine((i + 1) + " " + subjects[index] + " - " + schedules[index]);
             }
         }
     }
