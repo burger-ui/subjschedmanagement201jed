@@ -1,92 +1,83 @@
 ﻿using System;
+using BL;
+
 namespace subjschedmanagement
 {
     public class Program
     {
-        public static void Main(string[] args) {
+        static AddSubBL added = new AddSubBL();
+
+        public static void Main(string[] args)
+        {
             bool running = true;
 
             while (running)
             {
-
                 Menu();
                 string choice = Console.ReadLine();
 
                 if (choice == "1")
                 {
-                    Add();
+                    add();
                 }
                 else if (choice == "2")
                 {
-                    Show();
+                    show();
                 }
                 else if (choice == "3")
                 {
+                    remove();
+                }
+                else if (choice == "4")
+                {
                     running = false;
-                    Console.WriteLine("Program ended");
+                    Console.WriteLine("Exiting the program. Goodbye!");
                 }
                 else
                 {
-                    Console.WriteLine("Invalid Choice");
+                    Console.WriteLine("Invalid choice. Please try again.");
                 }
             }
         }
-        static string[] subjects = new string[5];
-        static string[] schedules = new string[5];
-        static int index = 0;
 
         static void Menu()
         {
-
-            Console.WriteLine("\n1. Add Subjects");
-            Console.WriteLine("2. View Subjects");
-            Console.WriteLine("3. Exit ");
-            Console.Write("choose ");
+            Console.WriteLine("\nSubject Schedule Management");
+            Console.WriteLine("1. Add Subject");
+            Console.WriteLine("2. Show Subjects");
+            Console.WriteLine("3. Remove Subject");
+            Console.WriteLine("4. Exit");
+            Console.Write("Enter your choice: ");
         }
 
-        static void Add()
+        static void add()
         {
-            int index = 0;
-
-            for (int i = 1; i < subjects.Length; i++) {
-
-                if (subjects[i] == null) { 
-                    index = i; break;
-                }
-            }
-
-            if (index == 0){
-
-                Console.WriteLine("Subject List is Full");
-                return;
-            }
-
-            Console.WriteLine("Enter Subject Name: ");
-            subjects[index] = Console.ReadLine();
-
-            Console.WriteLine("Enter Schedule: ");
-            schedules[index] = Console.ReadLine();
-
-            int count = 0;
-            count++;
-            Console.WriteLine("Subject added Successfully.");
-
-           
+            Console.Write("Enter Subject Name: ");
+            string subjectName = Console.ReadLine();
+            Console.Write("Enter Schedule: ");
+            string schedule = Console.ReadLine();
+            added.AddSubject(subjectName, schedule);
         }
 
-        static void Show()
+        static void show()
         {
+            Console.WriteLine("\nSubjects and Schedules:");
+            added.ShowSubjects();
+        }
 
-            if (index == 0)
+        static void remove()
+        {
+            Console.WriteLine("\nEnter the number of the subject to remove:");
+            added.ShowSubjects();
+            Console.Write("Subject number: ");
+            if (int.TryParse(Console.ReadLine(), out int subjectIndex))
             {
-                Console.WriteLine("No data found.");
-                return;
+                added.RemoveSubject(subjectIndex);
             }
-            for (int i = 0; i < index; i++)
+            else
             {
-                Console.WriteLine((i + 1) + " " + subjects[index] + " - " + schedules[index]);
+                Console.WriteLine("Invalid input. Please enter a number.");
             }
         }
     }
-
 }
